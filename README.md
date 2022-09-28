@@ -15,6 +15,7 @@
 ## Description
 
 ![x3d_concept](./src/pictures/x3d_concept.png)
+
 X3D network progressively expand a 2D network across the following axes: Temporal duration $\gamma_t$, frame rate $\gamma_{\tau}$ , spatial resolution $\gamma_s$, width $\gamma_w$, bottleneck width $\gamma_b$, and depth $\gamma_d$.
 
 - X-Fast expands the temporal activation size, $\gamma_t$, by increasing the frame-rate, $1/\gamma_{\tau}$ , and therefore temporal resolution, while holding the clip duration constant.
@@ -32,13 +33,17 @@ X3D network progressively expand a 2D network across the following axes: Tempora
 ## Model Architecture
 
 The architecture of x3d is as follows:
-![x3d_architecture](/src/pictures/x3d_architecture.png)
+
+![x3d_architecture](./src/pictures/x3d_architecture.png)
+
 The dimensions of kernels are denoted by {${{T×S^2, C}}$} for temporal, spatial, and channel sizes. Strides are denoted as {temporal stride, spatial ${stride}^2$}. This network is expanded using factors {$\gamma_t,\gamma_{\tau},\gamma_s,\gamma_w,\gamma_b,\gamma_d$} to form X3D. Without expansion (all factors equal to one), this model is referred to as X2D, having 20.67M FLOPS and 1.63M parameters.
 
-![X3D-S](/src/pictures/x3d_s.png)
+![X3D-S](./src/pictures/x3d_s.png)
+
 X3D-S with 1.96G FLOPs, 3.76M param, and 72.9% top-1 accuracy using expansion of $\gamma_{\tau}=6$, $\gamma_t=13$, $\gamma_s=\sqrt{2}$, $\gamma_w=1$, $\gamma_b=2.25$, $\gamma_d=2.2$.
 
-![X3D-M](/src/pictures/x3d_m.png)
+![X3D-M](./src/pictures/x3d_m.png)
+
 X3D-M with 4.73G FLOPs, 3.76M param, and 74.6% top-1 accuracy using expansion of $\gamma_{\tau}=5$, $\gamma_t=16$, $\gamma_s=2$, $\gamma_w=1$, $\gamma_b=2.25$, $\gamma_d=2.2$.
 
 ## Dataset
