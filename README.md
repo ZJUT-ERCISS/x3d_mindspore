@@ -1,6 +1,16 @@
 # Contents
-
-TODO
+- [Contents](#contents)
+  - [Description](#description)
+  - [Model Architecture](#model-architecture)
+  - [Dataset](#dataset)
+  - [Environment Requirements](#environment-requirements)
+  - [Getting Start](#getting-start)
+  - [Script Description](#script-description)
+    - [Script and Sample Code](#script-and-sample-code)
+    - [Script Parameters](#script-parameters)
+    - [Training Process](#training-process)
+    - [Evaluation Process](#evaluation-process)
+  - [Citation](#citation)
 
 ## Description
 
@@ -22,13 +32,13 @@ X3D network progressively expand a 2D network across the following axes: Tempora
 ## Model Architecture
 
 The architecture of x3d is as follows:
-![x3d_architecture](./src/pictures/x3d_architecture.png)
+![x3d_architecture](/src/pictures/x3d_architecture.png)
 The dimensions of kernels are denoted by {${{T×S^2, C}}$} for temporal, spatial, and channel sizes. Strides are denoted as {temporal stride, spatial ${stride}^2$}. This network is expanded using factors {$\gamma_t,\gamma_{\tau},\gamma_s,\gamma_w,\gamma_b,\gamma_d$} to form X3D. Without expansion (all factors equal to one), this model is referred to as X2D, having 20.67M FLOPS and 1.63M parameters.
 
-![X3D-S](./src/pictures/x3d_s.png)
+![X3D-S](/src/pictures/x3d_s.png)
 X3D-S with 1.96G FLOPs, 3.76M param, and 72.9% top-1 accuracy using expansion of $\gamma_{\tau}=6$, $\gamma_t=13$, $\gamma_s=\sqrt{2}$, $\gamma_w=1$, $\gamma_b=2.25$, $\gamma_d=2.2$.
 
-![X3D-M](./src/pictures/x3d_m.png)
+![X3D-M](/src/pictures/x3d_m.png)
 X3D-M with 4.73G FLOPs, 3.76M param, and 74.6% top-1 accuracy using expansion of $\gamma_{\tau}=5$, $\gamma_t=16$, $\gamma_s=2$, $\gamma_w=1$, $\gamma_b=2.25$, $\gamma_d=2.2$.
 
 ## Dataset
@@ -50,19 +60,19 @@ The directory structure of Kinetic-400 dataset looks like:
     .
     |-kinetic-400
         |-- train
-        |   |-- ___qijXy2f0_000011_000021.mp4      // video file
-        |   |-- ___dTOdxzXY_000022_000032.mp4      // video file
+        |   |-- ___qijXy2f0_000011_000021.mp4       // video file
+        |   |-- ___dTOdxzXY_000022_000032.mp4       // video file
         |    ...
         |-- test
         |   |-- __Zh0xijkrw_000042_000052.mp4       // video file
-        |   |-- __zVSUyXzd8_000070_000080.mp4   // video file
+        |   |-- __zVSUyXzd8_000070_000080.mp4       // video file
         |-- val
         |   |-- __wsytoYy3Q_000055_000065.mp4       // video file
-        |   |-- __vzEs2wzdQ_000026_000036.mp4   // video file
+        |   |-- __vzEs2wzdQ_000026_000036.mp4       // video file
         |    ...
-        |-- kinetics-400_train.csv             //training dataset label file.
-        |-- kinetics-400_test.csv              //testing dataset label file.
-        |-- kinetics-400_val.csv               //validation dataset label file.
+        |-- kinetics-400_train.csv                  // training dataset label file.
+        |-- kinetics-400_test.csv                   // testing dataset label file.
+        |-- kinetics-400_val.csv                    // validation dataset label file.
 
         ...
 ```
