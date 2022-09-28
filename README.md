@@ -4,12 +4,13 @@
   - [Model Architecture](#model-architecture)
   - [Dataset](#dataset)
   - [Environment Requirements](#environment-requirements)
-  - [Getting Start](#getting-start)
+  - [Quick Start](#quick-start)
   - [Script Description](#script-description)
     - [Script and Sample Code](#script-and-sample-code)
     - [Script Parameters](#script-parameters)
-    - [Training Process](#training-process)
-    - [Evaluation Process](#evaluation-process)
+  - [Training Process](#training-process)
+  - [Evaluation Process](#evaluation-process)
+  - [Model Description](#model-description)
   - [Citation](#citation)
 
 ## Description
@@ -34,15 +35,21 @@ X3D network progressively expand a 2D network across the following axes: Tempora
 
 The architecture of x3d is as follows:
 
-![x3d_architecture](./src/pictures/x3d_architecture.png)
+<div align=center>
+<img src="./src/pictures/x3d_architecture.png"/>
+</div>
 
-The dimensions of kernels are denoted by {${{T×S^2, C}}$} for temporal, spatial, and channel sizes. Strides are denoted as {temporal stride, spatial ${stride}^2$}. This network is expanded using factors {$\gamma_t,\gamma_{\tau},\gamma_s,\gamma_w,\gamma_b,\gamma_d$} to form X3D. Without expansion (all factors equal to one), this model is referred to as X2D, having 20.67M FLOPS and 1.63M parameters.
+The dimensions of kernels are denoted by $\{{{T×S^2, C}}\}$ for temporal, spatial, and channel sizes. Strides are denoted as {temporal stride, spatial ${stride}^2$}. This network is expanded using factors $\{\gamma_t,\gamma_{\tau},\gamma_s,\gamma_w,\gamma_b,\gamma_d\}$ to form X3D. Without expansion (all factors equal to one), this model is referred to as X2D, having 20.67M FLOPS and 1.63M parameters.
 
-![X3D-S](./src/pictures/x3d_s.png)
+<div align=center>
+<img src="./src/pictures/x3d_s.png"/>
+</div>
 
 X3D-S with 1.96G FLOPs, 3.76M param, and 72.9% top-1 accuracy using expansion of $\gamma_{\tau}=6$, $\gamma_t=13$, $\gamma_s=\sqrt{2}$, $\gamma_w=1$, $\gamma_b=2.25$, $\gamma_d=2.2$.
 
-![X3D-M](./src/pictures/x3d_m.png)
+<div align=center>
+<img src="./src/pictures/x3d_m.png"/>
+</div>
 
 X3D-M with 4.73G FLOPs, 3.76M param, and 74.6% top-1 accuracy using expansion of $\gamma_{\tau}=5$, $\gamma_t=16$, $\gamma_s=2$, $\gamma_w=1$, $\gamma_b=2.25$, $\gamma_d=2.2$.
 
@@ -110,7 +117,7 @@ Python and dependencies
   - [MindSpore Tutorials](https://www.mindspore.cn/tutorials/en/master/index.html)
   - [MindSpore Python API](https://www.mindspore.cn/docs/en/master/index.html)
 
-## Getting Start
+## Quick Start
 
 - Run on GPU
 
@@ -329,13 +336,35 @@ data_loader:
 
 ```
 
-### Training Process
+## Training Process
 
 TODO
 
-### Evaluation Process
+## Evaluation Process
 
 TODO
+
+## Model Description
+
+| Parameters          | X3D-XS | X3D-S | X3D-M | X3D-L |
+| :-----------------: | :---: | :---: | :---: | :---: |
+| SIZE                | XS | S | M | L |
+| Dataset             | Kinetics 400 | Kinetics 400  | Kinetics 400  | Kinetics 400  |
+| parameters (M)      | 3.8                | 3.8         | 3.8 | 6.2 |
+| FLOPs (G)           | 0.60 | 1.96 | 4.73 | 18.37 |
+| Top1 10-clip        | 67.04 | 71.54 | 74.56 | 75.21 |
+| Top5 10-clip        | 87.88 | 90.71 | 92.00 | 92.42 |
+| Frame length        | 4 | 13 | 16 | 16 |
+| Sample rate         | 12  | 6 | 5 | 5 |
+| Batch_size          | 16 | 16 | 16 | 8 |
+| Training Parameters | train_crop_size = 160, depth_factor = 2.2 | train_crop_size = 160, depth_factor = 2.2 |  train_crop_size = 224, depth_factor = 2.2 | train_crop_size = 312, depth_factor = 5.0 |
+| Optimizer           | SGD | SGD | SGD | SGD |
+| Scheduler           | cosine_annealing | cosine_annealing | cosine_annealing | cosine_annealing |
+| Loss Function       | SoftmaxCrossEntropyWithLogits | SoftmaxCrossEntropyWithLogits | SoftmaxCrossEntropyWithLogits | SoftmaxCrossEntropyWithLogits |
+| Config               | [src/config/x3d_XS](src/config/x3d_xs.yaml) | [src/config/x3d_S](src/config/x3d_s.yaml) | [src/config/x3d_M](src/config/x3d_m.yaml) | [src/config/x3d_L](src/config/x3d_l.yaml) |
+| Pretrained Model     | [x3d_XS_kinetics400](https://zjuteducn-my.sharepoint.com/:u:/g/personal/201906010313_zjut_edu_cn/EYwLbhrIcCdIor3J_Dxj3foBMx2bFb7zcw9QRVBkamZE_A?e=p4tDBt) | [x3d_S_kinetics400](https://zjuteducn-my.sharepoint.com/:u:/g/personal/201906010313_zjut_edu_cn/EUH1YqWCkLlLlEMA9A8MuwQBSPQ0yjyUJVUIlsuWbP3YeQ?e=WK955U) | [x3d_M_kinetics400](https://zjuteducn-my.sharepoint.com/:u:/g/personal/201906010313_zjut_edu_cn/EVqLWmg7v4JBkLJPY3vP-1kBeq7uI5sE2Tin7kM5PcxQMw?e=S1wCy0) | [x3d_L_kinetics400](https://zjuteducn-my.sharepoint.com/:u:/g/personal/201906010313_zjut_edu_cn/EaVbGiHvrf5Nl6TooLlq340B4LMrLF8Cqm9PH0w9Mlqx9Q?e=a2XEoh) |
+
+
 
 ## Citation
 
