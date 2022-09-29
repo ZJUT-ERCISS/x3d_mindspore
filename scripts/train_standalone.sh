@@ -14,6 +14,6 @@ DATA_PATH=$2
 
 export PYTHONPATH=$PYTHON_PATH
 python $PYTHON_PATH/src/example/x3d_kinetics400_train.py --data_url $DATA_PATH \
-    >  train_distributed.log 2>&1
+    >  train_standalone.log 2>&1
 
 

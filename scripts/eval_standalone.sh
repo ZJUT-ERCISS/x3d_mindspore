@@ -1,7 +1,7 @@
 echo "================================================================================================"
 echo "Please run the script as: "
 echo "bash eval_standalone.sh [PROJECT_PATH] [DATA_PATH] [MODEL_PATH]"
-echo "For example: basheval_standalone.sh /home/x3d /home/publicfile/kinetics-400 x3d_m_kinetics400.ckpt"
+echo "For example: bash eval_standalone.sh /home/x3d /home/publicfile/kinetics-400 x3d_m_kinetics400.ckpt"
 echo "================================================================================================"
 set -e
 if [ $# -lt 2 ]; then
@@ -15,6 +15,6 @@ MODEL_PATH=$3
 
 export PYTHONPATH=$PYTHON_PATH
 python $PYTHON_PATH/src/example/x3d_kinetics400_eval.py --data_url $DATA_PATH \
-    --pretrained_model $MODEL_PATH >  eval_distributed.log 2>&1
+    --pretrained_model $MODEL_PATH >  eval_result.log 2>&1
 
 

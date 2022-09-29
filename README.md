@@ -9,6 +9,8 @@
     - [Script and Sample Code](#script-and-sample-code)
     - [Script Parameters](#script-parameters)
   - [Training Process](#training-process)
+    - [Training](#training)
+    - [Distributed Training](#distributed-training)
   - [Evaluation Process](#evaluation-process)
   - [Model Description](#model-description)
   - [Citation](#citation)
@@ -338,11 +340,86 @@ data_loader:
 
 ## Training Process
 
-TODO
+### Training
+
+Run `scripts/train_standalone.sh` to train the model(x3d_m) standalone. The usage of the script is:
+
+```text
+bash train_standalone.sh [PROJECT_PATH] [DATA_PATH]
+```
+
+You can view the results through the file `train_standalone.log`.
+
+```text
+[Start training `x3d_kinetics400`]
+================================================================================
+epoch: 1 step: 1, loss is 5.995155334472656
+epoch: 1 step: 2, loss is 6.002779483795166
+epoch: 1 step: 3, loss is 5.9802398681640625
+epoch: 1 step: 4, loss is 5.989277362823486
+epoch: 1 step: 5, loss is 5.979276180267334
+epoch: 1 step: 6, loss is 5.996688365936279
+epoch: 1 step: 7, loss is 5.987305641174316
+...
+```
+
+The model checkpoint will be saved into `./x3d`.
+
+### Distributed Training
+
+Run 'scripts/train_distribute.sh' to train the model distributed. The usage of the script is:
+
+```text
+bash train_distribute.sh [PROJECT_PATH] [DATA_PATH]
+```
+
+The above shell script will run distribute training in the background. You can view the results through the file `train_distributed.log`.
+
+```text
+[Start training `x3d_kinetics400`]
+================================================================================
+epoch: 1 step: 1, loss is 5.988784313201904
+epoch: 1 step: 1, loss is 5.9909162521362305
+epoch: 1 step: 2, loss is 5.995461463928223
+epoch: 1 step: 2, loss is 5.985698223114014
+epoch: 1 step: 3, loss is 5.979603290557861
+epoch: 1 step: 3, loss is 5.984967231750488
+epoch: 1 step: 4, loss is 5.994110584259033
+epoch: 1 step: 4, loss is 5.9942779541015625
+epoch: 1 step: 5, loss is 6.005364894866943
+epoch: 1 step: 5, loss is 5.98798942565918
+epoch: 1 step: 6, loss is 5.977146148681641
+epoch: 1 step: 6, loss is 6.000572204589844
+epoch: 1 step: 7, loss is 5.988678932189941
+epoch: 1 step: 7, loss is 5.995543003082275
+```
+
+The model checkpoint will be saved into `./x3dckpt`.
 
 ## Evaluation Process
 
-TODO
+The evaluation dataset was [Kinetics400](https://www.deepmind.com/open-source/kinetics)
+
+Run `scripts/eval_standalone.sh` to evaluate the model(x3d_m). The usage of the script is:
+
+```text
+bash scripts/eval_standalone.sh [PROJECT_PATH] [DATA_PATH] [MODEL_PATH]
+```
+
+The eval results can be viewed in `eval_result.log`.
+
+```text
+[Start eval `x3d_kinetics400`]
+eval: 1/2484
+eval: 2/2484
+eval: 3/2484
+eval: 4/2484
+...
+eval: 2482/2484
+eval: 2483/2484
+eval: 2484/2484
+{'Loss':5.988906774751, 'Top_1_Accuracy': 0.7455716586151369, 'Top_5_Accuracy': 0.919987922705314}
+```
 
 ## Model Description
 
@@ -362,7 +439,7 @@ TODO
 | Scheduler           | cosine_annealing | cosine_annealing | cosine_annealing | cosine_annealing |
 | Loss Function       | SoftmaxCrossEntropyWithLogits | SoftmaxCrossEntropyWithLogits | SoftmaxCrossEntropyWithLogits | SoftmaxCrossEntropyWithLogits |
 | Config               | [src/config/x3d_XS](src/config/x3d_xs.yaml) | [src/config/x3d_S](src/config/x3d_s.yaml) | [src/config/x3d_M](src/config/x3d_m.yaml) | [src/config/x3d_L](src/config/x3d_l.yaml) |
-| Pretrained Model     | [x3d_XS_kinetics400](https://zjuteducn-my.sharepoint.com/:u:/g/personal/201906010313_zjut_edu_cn/EYwLbhrIcCdIor3J_Dxj3foBMx2bFb7zcw9QRVBkamZE_A?e=p4tDBt) | [x3d_S_kinetics400](https://zjuteducn-my.sharepoint.com/:u:/g/personal/201906010313_zjut_edu_cn/EUH1YqWCkLlLlEMA9A8MuwQBSPQ0yjyUJVUIlsuWbP3YeQ?e=WK955U) | [x3d_M_kinetics400](https://zjuteducn-my.sharepoint.com/:u:/g/personal/201906010313_zjut_edu_cn/EVqLWmg7v4JBkLJPY3vP-1kBeq7uI5sE2Tin7kM5PcxQMw?e=S1wCy0) | [x3d_L_kinetics400](https://zjuteducn-my.sharepoint.com/:u:/g/personal/201906010313_zjut_edu_cn/EaVbGiHvrf5Nl6TooLlq340B4LMrLF8Cqm9PH0w9Mlqx9Q?e=a2XEoh) |
+| Pretrained Model     | [x3d_XS_kinetics400.ckpt](https://zjuteducn-my.sharepoint.com/:u:/g/personal/201906010313_zjut_edu_cn/EYwLbhrIcCdIor3J_Dxj3foBMx2bFb7zcw9QRVBkamZE_A?e=p4tDBt) | [x3d_S_kinetics400.ckpt](https://zjuteducn-my.sharepoint.com/:u:/g/personal/201906010313_zjut_edu_cn/EUH1YqWCkLlLlEMA9A8MuwQBSPQ0yjyUJVUIlsuWbP3YeQ?e=WK955U) | [x3d_M_kinetics400.ckpt](https://zjuteducn-my.sharepoint.com/:u:/g/personal/201906010313_zjut_edu_cn/EVqLWmg7v4JBkLJPY3vP-1kBeq7uI5sE2Tin7kM5PcxQMw?e=S1wCy0) | [x3d_L_kinetics400.ckpt](https://zjuteducn-my.sharepoint.com/:u:/g/personal/201906010313_zjut_edu_cn/EaVbGiHvrf5Nl6TooLlq340B4LMrLF8Cqm9PH0w9Mlqx9Q?e=a2XEoh) |
 
 
 
@@ -371,10 +448,18 @@ TODO
 If you find this project useful in your research, please consider citing:
 
 ```latex
+@inproceedings{x3d2020,
+  Author    = {Christoph Feichtenhofer},
+  Title     = {{X3D}: Progressive Network Expansion for Efficient Video Recognition},
+  Booktitle = {{CVPR}},
+  Year      = {2020}},
+  doi       = {10.1109/cvpr42600.2020.00028},
+```
+
+```latex
 @misc{x3d_mindspore,
-    title={{X3D}: Progressive Network Expansion for Efficient Video Recognition},
-    author={Christoph Feichtenhofer},
-    doi={10.1109/cvpr42600.2020.00028 },
+    title={Mindspore Video Models},
+    author={ZJUT-ERCISS},
     year={2022},
     publisher = {GitHub},
     journal = {GitHub repository},
